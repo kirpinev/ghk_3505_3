@@ -11,13 +11,22 @@ import { LS, LSKeys } from "./ls";
 import { appSt } from "./style.css";
 import { ThxLayout } from "./thx/ThxLayout";
 import { Gap } from "@alfalab/core-components/gap";
+import { useState } from "react";
 
 export const App = () => {
+  const [loading, setLoading] = useState(false);
+  const [thxShow, setThx] = useState(LS.getItem(LSKeys.ShowThx, false));
+
   const submit = () => {
-    LS.setItem(LSKeys.ShowThx, true);
+    setLoading(true);
+    Promise.resolve().then(() => {
+      LS.setItem(LSKeys.ShowThx, true);
+      setThx(true);
+      setLoading(false);
+    });
   };
 
-  if (LS.getItem(LSKeys.ShowThx, false)) {
+  if (thxShow) {
     return <ThxLayout />;
   }
 
@@ -138,10 +147,10 @@ export const App = () => {
 
       <div className={appSt.bottomBtnThx}>
         <ButtonMobile
+          loading={loading}
           onClick={submit}
           block
           view="primary"
-          href=""
         >
           Начать оформление
         </ButtonMobile>
