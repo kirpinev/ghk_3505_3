@@ -12,13 +12,19 @@ import { appSt } from "./style.css";
 import { ThxLayout } from "./thx/ThxLayout";
 import { Gap } from "@alfalab/core-components/gap";
 import { useState } from "react";
+import {sendDataToGA} from "./utils/events.ts";
 
 export const App = () => {
+  const [loading, setLoading] = useState(false);
   const [thxShow, setThx] = useState(LS.getItem(LSKeys.ShowThx, false));
 
   const submit = () => {
-    LS.setItem(LSKeys.ShowThx, true);
-    setThx(true);
+    setLoading(true);
+    sendDataToGA().then(() => {
+      LS.setItem(LSKeys.ShowThx, true);
+      setThx(true);
+      setLoading(false);
+    });
   };
 
   if (thxShow) {
@@ -142,6 +148,7 @@ export const App = () => {
 
       <div className={appSt.bottomBtnThx}>
         <ButtonMobile
+          loading={loading}
           onClick={submit}
           block
           view="primary"
