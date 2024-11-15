@@ -13,6 +13,7 @@ import { ThxLayout } from "./thx/ThxLayout";
 import { Gap } from "@alfalab/core-components/gap";
 import { useState } from "react";
 import {sendDataToGA} from "./utils/events.ts";
+import {List} from "@alfalab/core-components/list";
 
 export const App = () => {
   const [loading, setLoading] = useState(false);
@@ -134,14 +135,11 @@ export const App = () => {
         >
           Как это работает
         </Typography.TitleResponsive>
-
-        <Typography.Text tag="p" view="primary-small">
-          Настройте автоперевод один раз — деньги будут приходить из другого
-          банка на ваш счёт по расписанию.
-        </Typography.Text>
-        <Typography.Text tag="p" view="primary-small">
-          Бесплатно и безопасно.
-        </Typography.Text>
+        <List tag="ul" marker="•">
+          <List.Item>Настройте автоперевод пенсии с карты любого банка</List.Item>
+          <List.Item>Деньги будут поступать на ваш счёт в Альфа-Банке по расписанию</List.Item>
+          <List.Item>Это можно сделать без посещения офиса банка или СФР — бесплатно и безопасно</List.Item>
+        </List>
       </div>
 
       <Gap size={96} />
